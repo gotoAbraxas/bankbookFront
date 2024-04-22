@@ -1,13 +1,18 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import MyHeaderTemplate from "../template/MyHeaderTemplate";
+import MySidebarTemplate from "../template/MySidebarTemplate";
 
 const HomeRouter = {
     path: '',
     element: <MyHeaderTemplate />,
     children: [
         {
-            path: 'mypage',
-            element: <div>My Page</div>,
+            path: '/log',
+            element: <MySidebarTemplate />,
+            children: [
+
+
+            ]
         },
     ],
 };

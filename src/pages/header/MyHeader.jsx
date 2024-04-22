@@ -1,9 +1,22 @@
-import { AppBar, Box, Button, Grid, Toolbar, Typography } from "@mui/material"
+import { AppBar, BottomNavigation, BottomNavigationAction, Box, Button, Grid, Menu, MenuItem, Toolbar, Typography } from "@mui/material"
 import { Link } from "react-router-dom"
 import NavButtonChips from "../../common/NavButtonChips";
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import { useState } from "react";
+
 
 const MyHeader = () => {
+    const [value, setValue] = useState(0);
 
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     const isLogin = false;
 
@@ -11,15 +24,41 @@ const MyHeader = () => {
         <Toolbar>
             <Grid container>
                 <Grid item xs={6}>
-                    BankBook
+                    <Typography variant="h4">
+                        BankBook
+                    </Typography>
                 </Grid>
                 <Grid item xs={6} >
-                    <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                    <Box sx={{ display: "flex", flexDirection: 'row', justifyContent: "space-between" }}>
                         <Box>
-                            <Button color="info" size="medium" >
-                                <Link to="/story">STORY</Link>
+
+                            <Button
+                                id="basic-button"
+                                aria-controls={open ? 'basic-menu' : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={open ? 'true' : undefined}
+                                onClick={handleClick}
+                                size="large"
+                            >
+                                <FormatListBulletedIcon color="info" />
                             </Button>
-                            <NavButtonChips text="로그인" color="info" to="test" />
+                            <Menu
+                                id="basic-menu"
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={handleClose}
+                                MenuListProps={{
+                                    'aria-labelledby': 'basic-button',
+                                }}
+                            >
+                                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                <MenuItem onClick={handleClose}>My account</MenuItem>
+                                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                            </Menu>
+
+
+                            <NavButtonChips text="HOME" color="info" to="/" size="large" />
+                            <NavButtonChips text="고객사조회" color="info" to="/log" size="large" />
                         </Box>
                         <Box>
 
@@ -29,13 +68,7 @@ const MyHeader = () => {
                                 </>
                             ) : (
                                 <>
-                                    <Button color="text" size="large">
-                                        <Link to="/login">로그인</Link>
-                                    </Button>
-
-                                    <Button color="primary" size="large">
-                                        <Link to="/signup">signup</Link>
-                                    </Button>
+                                    <NavButtonChips text="로그인" color="info" to="/login" size="large" />
                                 </>
                             )}
                         </Box>
